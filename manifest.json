@@ -1,0 +1,13 @@
+{
+    "manifest_version": 2,
+    "name": "Première extension",
+    "version": "1.0",
+    "description": "Calculatrice ",
+    "browser_action": {
+      "default_popup": "popup.html"
+    },
+    "permissions": [
+      "activeTab"
+    ]
+  }
+  
