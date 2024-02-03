@@ -1,8 +1,8 @@
-let input = document.getElementById("input"); // Sélection de l'élément d'entrée
-let operators = Array.from(document.getElementsByClassName("operator")); // Sélection des boutons d'opérateurs
-let numbers = Array.from(document.getElementsByClassName("operand")); // Sélection des boutons numériques
-let reset = document.getElementById("reset"); // Sélection du bouton de réinitialisation
-let calculate = document.getElementById("calculate"); // Sélection du bouton de calcul
+let input = document.getElementById("input"); 
+let operators = Array.from(document.getElementsByClassName("operator"));
+let numbers = Array.from(document.getElementsByClassName("operand")); 
+let reset = document.getElementById("reset"); 
+let calculate = document.getElementById("calculate"); 
 
 // Variables pour stocker les opérandes et l'opérateur
 let operand1 = "";
@@ -39,7 +39,6 @@ reset.addEventListener("click", () => {
   input.value = "";
 });
 
-// Fonction pour calculer le résultat
 function calculateResult(operand1, operator, operand2) {
   operand1 = parseFloat(operand1);
   operand2 = parseFloat(operand2);
@@ -62,7 +61,7 @@ function calculateResult(operand1, operator, operand2) {
   }
 }
 
-// Ajout d'un gestionnaire d'événements au bouton de calcul
+
 calculate.addEventListener("click", () => {
   if (operand1 && operand2 && operator) {
     let result = calculateResult(operand1, operator, operand2);
