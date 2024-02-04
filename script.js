@@ -1,8 +1,9 @@
-let input = document.getElementById("input"); 
+let input = document.getElementById("input");
 let operators = Array.from(document.getElementsByClassName("operator"));
-let numbers = Array.from(document.getElementsByClassName("operand")); 
-let reset = document.getElementById("reset"); 
-let calculate = document.getElementById("calculate"); 
+let numbers = Array.from(document.getElementsByClassName("operand"));
+let reset = document.getElementById("reset");
+let calculate = document.getElementById("calculate");
+let scientificOperators = Array.from(document.getElementsByClassName("scientific-operator"));
 
 // Variables pour stocker les opérandes et l'opérateur
 let operand1 = "";
@@ -38,6 +39,30 @@ reset.addEventListener("click", () => {
   operator = "";
   input.value = "";
 });
+// Ajout d'un gestionnaire d'événements au bouton de calcul
+calculate.addEventListener("click", () => {
+  if (operand1 && operand2 && operator) {
+    let result = calculateResult(operand1, operator, operand2);
+    input.value = result;
+    operand1 = result.toString();
+    operand2 = "";
+    operator = "";
+  }
+});
+
+// Ajout de gestionnaires d'événements aux boutons d'opérateurs scientifiques
+scientificOperators.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (!operator && operand1) {
+      operator = button.value;
+      let result = calculateResult(operand1, operator);
+      input.value = result;
+      operand1 = result.toString();
+      operand2 = "";
+      operator = "";
+    }
+  });
+});
 
 function calculateResult(operand1, operator, operand2) {
   operand1 = parseFloat(operand1);
@@ -56,33 +81,40 @@ function calculateResult(operand1, operator, operand2) {
       } else {
         throw new Error("La division par zéro n'est pas autorisée.");
       }
+    case "square":
+      return Math.pow(operand1, 2);
+    case "cube":
+      return Math.pow(operand1, 3);
+    case "sqrt":
+      return Math.sqrt(operand1);
+    case "log":
+      return Math.log(operand1);
+    case "sin":
+      return Math.sin(operand1);
+    case "cos":
+      return Math.cos(operand1);
+    case "tan":
+      return Math.tan(operand1);
+    case "exp":
+      return Math.exp(operand1);
     default:
       throw new Error("Opérateur inconnu : " + operator);
   }
 }
 
-
-calculate.addEventListener("click", () => {
-  if (operand1 && operand2 && operator) {
-    let result = calculateResult(operand1, operator, operand2);
-    input.value = result;
-    operand1 = result.toString();
-    operand2 = "";
-    operator = "";
-  }
-});
-
 document.getElementById("copy").addEventListener("click", function () {
   var result = document.getElementById("input").value;
+  var copyMessage = document.getElementById("copy-message");
+
   navigator.clipboard
     .writeText(result)
     .then(() => {
-      // Succès - Afficher le message
-      document.getElementById("copy-message").style.display = "block";
+      // Succès - Afficher le message à côté du bouton
+      copyMessage.style.display = "inline";
 
       // Masquer le message après quelques secondes (par exemple, 2 secondes)
       setTimeout(function () {
-        document.getElementById("copy-message").style.display = "none";
+        copyMessage.style.display = "none";
       }, 2000);
     })
     .catch((err) => {
