@@ -4,7 +4,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 100vh;
+  width: 50vh;
   margin: 0;
   background-color: #fff;
   border-radius: 5px;
@@ -41,7 +41,6 @@ button {
 .scientific-operator {
   margin-top: 5%;
   background-color: #007bff;
-  grid-column: span 2;
 }
 #input {
   width: 90%;
