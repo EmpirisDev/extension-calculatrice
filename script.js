@@ -4,18 +4,67 @@ let numbers = Array.from(document.getElementsByClassName("operand"));
 let reset = document.getElementById("reset");
 let calculate = document.getElementById("calculate");
 let scientificOperators = Array.from(document.getElementsByClassName("scientific-operator"));
-
-// Variables pour stocker les opérandes et l'opérateur
 let operand1 = "";
 let operand2 = "";
 let operator = "";
 
+function calculateResult(operand1, operator, operand2) {
+  operand1 = parseFloat(operand1);
+  operand2 = parseFloat(operand2);
+
+  switch (operator) {
+    case "+":
+      return operand1 + operand2;
+    case "-":
+      return operand1 - operand2;
+    case "*":
+      return operand1 * operand2;
+    case "/":
+      if (operand2 !== 0) {
+        return operand1 / operand2;
+      } else {
+        throw new Error("La division par zéro n'est pas autorisée.");
+      }
+    case "square":
+      return Math.pow(operand1, 2);
+    case "cube":
+      return Math.pow(operand1, 3);
+    case "sqrt":
+      return Math.sqrt(operand1);
+    case "log":
+      return Math.log(operand1);
+    case "sin":
+      return Math.sin(operand1);
+    case "cos":
+      return Math.cos(operand1);
+    case "tan":
+      return Math.tan(operand1);
+    case "exp":
+      return Math.exp(operand1);
+    default:
+      throw new Error("Opérateur inconnu : " + operator);
+  }
+}
+
 // Ajout de gestionnaires d'événements aux boutons d'opérateurs
 operators.forEach((button) => {
   button.addEventListener("click", () => {
-    if (!operator) {
-      operator = button.value;
-      input.value = operand1 + operator;
+    if (button.value === ".") {
+      if (operator) {
+        if (!operand2.includes(".")) {
+          operand2 += button.value;
+        }
+      } else {
+        if (!operand1.includes(".")) {
+          operand1 += button.value;
+        }
+      }
+      input.value = operand1 + operator + operand2;
+    } else {
+      if (!operator) {
+        operator = button.value;
+        input.value = operand1 + operator;
+      }
     }
   });
 });
@@ -64,48 +113,29 @@ scientificOperators.forEach((button) => {
   });
 });
 
-function calculateResult(operand1, operator, operand2) {
-  operand1 = parseFloat(operand1);
-  operand2 = parseFloat(operand2);
+// Support des Parenthèses
+document.getElementById("open-parenthesis").addEventListener("click", function () {
+  document.getElementById("input").value += "(";
+});
 
-  switch (operator) {
-    case "+":
-      return operand1 + operand2;
-    case "-":
-      return operand1 - operand2;
-    case "*":
-      return operand1 * operand2;
-    case "/":
-      if (operand2 !== 0) {
-        return operand1 / operand2;
-      } else {
-        throw new Error("La division par zéro n'est pas autorisée.");
-      }
-    case "square":
-      return Math.pow(operand1, 2);
-    case "cube":
-      return Math.pow(operand1, 3);
-    case "sqrt":
-      return Math.sqrt(operand1);
-    case "log":
-      return Math.log(operand1);
-    case "sin":
-      return Math.sin(operand1);
-    case "cos":
-      return Math.cos(operand1);
-    case "tan":
-      return Math.tan(operand1);
-    case "exp":
-      return Math.exp(operand1);
-    default:
-      throw new Error("Opérateur inconnu : " + operator);
+document.getElementById("close-parenthesis").addEventListener("click", function () {
+  document.getElementById("input").value += ")";
+});
+
+// Lorsque l'utilisateur clique sur le bouton de calcul
+document.getElementById("calculate").addEventListener("click", function () {
+  const operation = document.getElementById("input").value;
+  try {
+    const result = eval(operation);
+    document.getElementById("input").value = result;
+  } catch (error) {
+    console.error("Invalid operation");
   }
-}
+});
 
 document.getElementById("copy").addEventListener("click", function () {
   var result = document.getElementById("input").value;
   var copyMessage = document.getElementById("copy-message");
-
   navigator.clipboard
     .writeText(result)
     .then(() => {
@@ -119,6 +149,5 @@ document.getElementById("copy").addEventListener("click", function () {
     })
     .catch((err) => {
       console.error("Erreur lors de la copie : ", err);
-      // Gérer l'erreur si la copie échoue
     });
 });

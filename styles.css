@@ -31,6 +31,9 @@ button {
 .operator {
   background-color: #007bff;
 }
+.parenthes {
+  background-color: #007bff;
+}
 
 .operand {
   background-color: #6c757d;
