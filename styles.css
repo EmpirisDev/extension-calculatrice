@@ -27,21 +27,47 @@ button {
   border-radius: 5px;
   cursor: pointer;
 }
+button#copy {
+  height: 40px;
+  font-size: 18px;
+  border: none;
+  color: #c08e8e;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 50px;;
+}
 
 .operator {
   background-color: #007bff;
 }
+.operator:hover {
+  background-color: #0056b3;
+}
 .parenthes {
   background-color: #007bff;
+}
+.parenthes:hover {
+  background-color: #0056b3;
 }
 
 .operand {
   background-color: #6c757d;
 }
+.operand:hover {
+  background-color: #5a6268;
+}
+
 .scientific-operator {
   margin-top: 5%;
   background-color: #007bff;
 }
+.scientific-operator:hover {
+  background-color: #0056b3;
+}
+.contenant-copy {
+  display: flex;
+}
+
 #input {
   width: 90%;
   height: 40px;
@@ -62,14 +88,23 @@ button {
 #reset {
   background-color: #dc3545;
 }
+#reset:hover {
+  background-color: #c82333;
+}
 
 #calculate {
   background-color: #28a745;
+}
+#calculate:hover {
+  background-color: #218838;
 }
 #copy-message {
   color: green;
   display: none;
 }
+
 #container {
   padding: 20px;
 }
+
+
